@@ -13,7 +13,7 @@ conn = sqlite3.connect(db)
 def load(name):
     df = pd.read_csv(f"{data_path}/{name}")
 
-    table_name = name.replace("olist", "").replace("_dataset", "").replace(".csv", "")
+    table_name = name.replace("olist_", "").replace("_dataset.csv", "").replace(".csv", "")
 
 
     # storing df into sql
