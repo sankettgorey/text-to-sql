@@ -60,7 +60,7 @@ def execute_query(state: AgentState):
         conn.close()
 
         if not all_results:
-            state["query_result"]="No results found"
+            state["query_result"]="No Results Found"
 
         else:
             state["query_result"]=json.dumps(all_results, indent=4)
