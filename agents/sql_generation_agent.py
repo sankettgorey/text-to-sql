@@ -47,12 +47,8 @@ chain = sql_generation_prompt | llm
 def sql_agent(state: AgentState):
     """generate sql query from the natural language"""
 
-    question = state["question"]
-    
-    
-
     # output = chain.invoke({"question": [HumanMessage(content=question)]})
-    output = chain.invoke(state)
+    output = chain.invoke(state["question"])
 
     # print(output.content)
     return output.content

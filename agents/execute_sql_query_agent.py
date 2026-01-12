@@ -5,10 +5,6 @@ import json
 
 sys.path.append(os.path.abspath("../"))
 
-from langchain_core.messages import HumanMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-# from langchain_ollama import ChatOllama
-
 from State_Schema.state_schema import AgentState
 from State_Schema.schema_info import SCHEMA_INFO
 
@@ -81,7 +77,7 @@ def execute_query(state: AgentState):
 
 if __name__=="__main__":
 
-    sql_query="SELECT customer_state, COUNT(*) AS num_customers\nFROM customers\nGROUP BY customer_state\nORDER BY num_customers DESC\nLIMIT 5"
+    sql_query="SELECT customer_state, COUNT(*) AS num_customers\nFROM customers\nGROUP BY customer_state\nORDER BY num_customers DESC\nLIMIT 0"
 
     initial_state = {
         "question": [],
