@@ -77,7 +77,7 @@ def execute_query(state: AgentState):
 
 if __name__=="__main__":
 
-    sql_query="SELECT customer_state, COUNT(*) AS num_customers\nFROM customers\nGROUP BY customer_state\nORDER BY num_customers DESC\nLIMIT 0"
+    sql_query="SELECT customer_state, COUNT(*) AS num_customers\nFROM customers\nGROUP BY customer_state\nORDER BY num_customers DESC\nLIMIT 5"
 
     initial_state = {
         "question": [],
