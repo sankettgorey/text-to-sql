@@ -10,6 +10,8 @@ from langchain_ollama import ChatOllama
 from State_Schema.state_schema import AgentState
 from State_Schema.schema_info import SCHEMA_INFO
 
+from loguru import logger
+
 
 
 llm = ChatOllama(model = "qwen3:8b")
@@ -47,15 +49,20 @@ chain = sql_generation_prompt | llm
 def sql_agent(state: AgentState):
     """generate sql query from the natural language"""
 
+
+
     # output = chain.invoke({"question": [HumanMessage(content=question)]})
     output = chain.invoke(state["question"])
 
     # print(output.content)
-    return output.content
+
+    logger.info("returning sql query for execution")
+    state["sql_query"] = output.content
+    return state
 
 
 if __name__ == "__main__":
-    initial_state = {"question": "what are the top 5 states by number of customers?"}
+    initial_state = {"question": [HumanMessage("what are the top 5 states by number of customers?")]}
 
     query=sql_agent(initial_state)
 

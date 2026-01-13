@@ -1,13 +1,16 @@
-from langchain_core.messages import SystemMessage, AIMessage, HumanMessage, BaseMessage
+import os
+import sys
+
+sys.path.append(os.path.abspath(".."))
+
+from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_ollama import ChatOllama
 
 from State_Schema.state_schema import AgentState
 from pydantic import BaseModel, Field
-import os
-import sys
 
-sys.path.append(os.path.abspath(".."))
+from loguru import logger
 
 
 
@@ -47,6 +50,13 @@ system_prompt = """
     - General knowledge (e.g., "What is the capital of France?", "How does photosynthesis work?")
     - Unrelated topics (e.g., "Tell me a joke", "What's the weather like?")
 
+    Examples of IN-SCOPE questions:
+    - "How many orders were placed last month?"
+    - "What are the top selling products?"
+    - "Show me customer distribution by state"
+    - "What is the average order value?"
+    - "Which sellers have the highest ratings?"
+
     If the question is a greeting, mark is_greeting as true and is_in_scope as false.
     If the question is ambiguous but could potentially relate to the e-commerce data, mark it as in_scope.
 
@@ -68,7 +78,7 @@ guardrails_chain = prompt | llm_with_structured_output
 
 def guardrails_agent(state: AgentState):
 
-    
+    logger.info("In guardrails agent")
 
     output = guardrails_chain.invoke(
         {
@@ -92,7 +102,9 @@ def guardrails_agent(state: AgentState):
 if __name__ == "__main__":
 
     state = {
-        "question": "can you tell me where is Pune?"
+        # "question": "can you tell me where is Pune?"
+        "question": "what are the top 5 states by number of customers?"
     }
 
-    guardrails_agent(state)
+    output = guardrails_agent(state)
+    print(output)

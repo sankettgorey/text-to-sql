@@ -73,9 +73,11 @@ def error_agent(state: AgentState):
         }
     )
 
+    iteration = state["iteration"] + 1
+
     state["sql_query"] = output.corrected_sql_query
-    state["error"] = output.error
-    state['iteraion'] = state.get("iteration", 0) + 1
+    state["error"] = output.error_reason
+    state['iteration'] = iteration
 
     return state
 

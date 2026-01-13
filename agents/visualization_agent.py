@@ -10,6 +10,7 @@ sys.path.append(os.path.abspath("../"))
 import json
 
 from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
 from State_Schema.state_schema import AgentState
@@ -18,6 +19,8 @@ import pandas as pd
 from pydantic import BaseModel, Field
 
 llm = ChatOllama(model="qwen3:8b")
+
+# llm = ChatOpenAI(model='gpt-4o')
 
 
 class PlotylyCode(BaseModel):
@@ -45,6 +48,7 @@ prompt = ChatPromptTemplate.from_messages(
             10. Make the visualization visually appealing with appropriate colors and layout
             11. Update the layout for better interactivity (hover info, responsive sizing)
             12. Return only python-plotly code. Don't return anything else
+            13. Don't set responseive=True and also set autosize=True optionally.
             """
         ),
         (
@@ -103,10 +107,12 @@ def visualization_agent(state: AgentState):
             "json": json
         }
 
+        import plotly
         import plotly.graph_objects as go
         import plotly.express as px
         exec_globals["go"] = go
         exec_globals["px"] = px
+        exec_globals["plotly"] = plotly
 
         exec(plotly_code, exec_globals)
 

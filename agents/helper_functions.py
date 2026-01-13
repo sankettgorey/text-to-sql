@@ -30,7 +30,7 @@ def should_retry(state: AgentState):
         if iteration < 3:
             return "retry"
         else:
-            return "end"
+            return "success"
 
     return "success"
 
