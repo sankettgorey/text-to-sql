@@ -10,7 +10,6 @@ sys.path.append(os.path.abspath("../"))
 import json
 
 from langchain_ollama import ChatOllama
-from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from State_Schema.state_schema import AgentState
