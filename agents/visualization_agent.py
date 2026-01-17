@@ -17,10 +17,13 @@ from State_Schema.state_schema import AgentState
 
 import pandas as pd
 from pydantic import BaseModel, Field
+from loguru import logger
 
-llm = ChatOllama(model="qwen3:8b")
+# llm = ChatOllama(model="qwen3:8b")
 
-# llm = ChatOpenAI(model='gpt-4o')
+os.environ['OPENAI_API_KEY'] = ""
+
+llm = ChatOpenAI(model='gpt-4o')
 
 
 class PlotylyCode(BaseModel):
@@ -37,7 +40,7 @@ prompt = ChatPromptTemplate.from_messages(
             "Generate a python-plotly code to visualize following data"
             """Requirements:
             1. Use plotly.graph_objects or plotly.express
-            2. The data is already loaded as 'df' (a pandas DataFrame)
+            2. The data is already loaded as 'df' (a pandas DataFrame).
             3. Create an appropriate graph type chart
             4. Limit data to top 20 rows if there are many rows
             5. Add proper titles, labels, and formatting
@@ -98,7 +101,7 @@ def visualization_agent(state: AgentState):
 
         print(output)
 
-        plotly_code = output.code
+        plotly_code = output.code.strip()
 
         # creating execution environment
         exec_globals = {
@@ -122,6 +125,7 @@ def visualization_agent(state: AgentState):
             raise ValueError("Generated code did not create a fig variable")
 
         graph_json = fig.to_json()
+        logger.info(graph_json)
 
         state["graph_json"] = graph_json
 

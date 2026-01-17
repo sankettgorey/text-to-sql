@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     import sqlite3
 
-    conn = sqlite3.connect("../ecommerce.db")
+    conn = sqlite3.connect("./ecommerce.db")
     cursor = conn.cursor()
 
     print(query)

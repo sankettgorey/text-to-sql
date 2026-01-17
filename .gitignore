@@ -1,1 +1,4 @@
 ecommerce.db
+*.json
+*.pyc
+*.toml

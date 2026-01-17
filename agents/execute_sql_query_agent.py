@@ -70,7 +70,9 @@ def execute_query(state: AgentState):
             state["query_result"]="No Results Found"
 
         else:
-            state["query_result"]=json.dumps(all_results, indent=4)
+            state["query_result"]=json.dumps(all_results, indent=2)
+            # state["query_result"]=all_results
+
 
         if state["error"]:
             state["error"]=""
